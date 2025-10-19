@@ -1,0 +1,59 @@
+# NHL API Relevant Docs
+
+This page includes the relevant information of the nhl docs for this project.
+
+NHL Stats API is a public API — no authentication or API key needed. 
+It’s a REST-style JSON service hosted at https://statsapi.web.nhl.com/api/v1/
+
+## NHL Stats API Quick Reference
+- /schedule — daily games
+- /game/{gamePk}/feed/live — full play-by-play JSON
+- /teams — team metadata
+- /people/{id} — player bio/stats
+- /standings — current standings
+
+### Schedule Endpoint Details
+GET https://statsapi.web.nhl.com/api/v1/schedule
+| Returns a list of data about the schedule for a specified date range. If no date range is specified, returns results from the current day.
+#### Modifiers
+?startDate=2018-01-09 | Start date for the search
+?endDate=2018-01-12 | End date for the search
+?teamId=30,17 | Limit results to a specific team(s). Team ids can be found through the teams endpoint
+
+### Teams Endpoint Details
+GET https://statsapi.web.nhl.com/api/v1/teams | Returns a list of data about
+all teams including their id, venue details, division, conference and franchise information.
+#### Modifiers
+?expand=team.stats | Returns the teams stats for the season
+
+### Game Endpoint Details
+GET https://statsapi.web.nhl.com/api/v1/game/ID/feed/live | Returns all data about a specified game id including play data with on-ice coordinates and post-game details like first, second and third stars and any details about shootouts. The data returned is simply too large at often over 30k lines and is best explored with a JSON viewer.
+GET https://statsapi.web.nhl.com/api/v1/game/ID/boxscore | Returns far less detail
+than feed/live | and is much more suitable for post-game details including goals,
+shots, PIMs, blocked, takeaways, giveaways and hits.
+GET https://statsapi.web.nhl.com/api/v1/game/ID/linescore | Even fewer details than
+boxscore. Has goals, shots on goal, powerplay and goalie pulled status, number of
+skaters and shootout information if applicable
+GET https://statsapi.web.nhl.com/api/v1/playTypes | This shows all the possible play types found within the liveData/plays portion of the game feed
+#### Game ID Info
+game ids will look like this: 2023020001
+The first 4 digits identify the season of the game (ie. 2017 for the 2017-2018 season). Always refer to a season with the starting year. A game played in March 2018 would still have a game ID that starts with 2017
+The next 2 digits give the type of game, where 01 = preseason, 02 = regular season, 03 = playoffs, 04 = all-star
+The final 4 digits identify the specific game number. For regular season and preseason games, this ranges from 0001 to the number of games played. (1353 for seasons with 32 teams (2022 - Present), 1271 for seasons with 31 teams (2017 - 2020) and 1230 for seasons with 30 teams). For playoff games, the 2nd digit of the specific number gives the round of the playoffs, the 3rd digit specifies the matchup, and the 4th digit specifies the game (out of 7).
+
+### Player Endpoint Details
+GET https://statsapi.web.nhl.com/api/v1/people/ID/stats | Complex endpoint with
+lots of append options to change what kind of stats you wish to obtain
+#### Modifiers
+?stats=statsSingleSeason&season=19801981 | Obtains single season statistics
+for a player
+?stats=gameLog&season=20162017 | Provides a game log showing stats for each game of a season
+?stats=onPaceRegularSeason&season=20172018 | This only works with the current
+in-progress season and shows projected totals based on current onPaceRegularSeason
+
+### Standings Endpoint Details
+GET https://statsapi.web.nhl.com/api/v1/standings | Returns ordered standings data
+for each team broken up by divisions
+#### Modifiers
+?season=20032004 | Standings for a specified season
+?expand=standings.record | Detailed information for each team including home and away records, record in shootouts, last ten games, and split head-to-head records against divisions and conferences
