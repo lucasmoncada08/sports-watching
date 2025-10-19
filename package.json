@@ -1,0 +1,31 @@
+{
+  "name": "sports-watching",
+  "version": "1.0.0",
+  "description": "A project started to test the feasibility of NHL sports games feed tracking to know what parts of games to watch.",
+  "main": "index.js",
+  "scripts": {
+    "experiment": "ts-node src/experiment.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasmoncada08/sports-watching.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lucasmoncada08/sports-watching/issues"
+  },
+  "homepage": "https://github.com/lucasmoncada08/sports-watching#readme",
+  "devDependencies": {
+    "@types/node": "^24.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.12.2"
+  }
+}
